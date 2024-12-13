@@ -10,7 +10,7 @@ import {
 import GoogleReCaptcha from './integrations/recaptcha.js';
 import componentDecorator from './mappings.js';
 import DocBasedFormToAF from './transform.js';
-import transferRepeatableDOM from './components/repeat/repeat.js';
+import transferRepeatableDOM, { insertAddButton, insertRemoveButton } from './components/repeat/repeat.js';
 import { handleSubmit } from './submit.js';
 import { getSubmitBaseUrl, emailPattern } from './constant.js';
 
@@ -36,7 +36,7 @@ const constraintsDef = Object.entries({
   file: ['accept', 'Multiple'],
   panel: [['maxOccur', 'data-max'], ['minOccur', 'data-min']],
 }).flatMap(([types, constraintDef]) => types.split('|')
-  .map((type) => [type, constraintDef.map((cd) => (Array.isArray(cd) ? cd : [cd, cd]))]));
+    .map((type) => [type, constraintDef.map((cd) => (Array.isArray(cd) ? cd : [cd, cd]))]));
 
 const constraintsObject = Object.fromEntries(constraintsDef);
 
@@ -45,10 +45,10 @@ function setConstraints(element, fd) {
   const constraints = constraintsObject[renderType];
   if (constraints) {
     constraints
-      .filter(([nm]) => fd[nm])
-      .forEach(([nm, htmlNm]) => {
-        element.setAttribute(htmlNm, fd[nm]);
-      });
+        .filter(([nm]) => fd[nm])
+        .forEach(([nm, htmlNm]) => {
+          element.setAttribute(htmlNm, fd[nm]);
+        });
   }
 }
 
@@ -98,20 +98,20 @@ const createSelect = withFieldWrapper((fd) => {
   const optionNames = fd?.enumNames ?? options;
 
   if (options.length === 1
-    && options?.[0]?.startsWith('https://')) {
+      && options?.[0]?.startsWith('https://')) {
     const optionsUrl = new URL(options?.[0]);
     // using async to avoid rendering
     if (optionsUrl.hostname.endsWith('hlx.page')
-    || optionsUrl.hostname.endsWith('hlx.live')) {
+        || optionsUrl.hostname.endsWith('hlx.live')) {
       fetch(`${optionsUrl.pathname}${optionsUrl.search}`)
-        .then(async (response) => {
-          const json = await response.json();
-          const values = [];
-          json.data.forEach((opt) => {
-            addOption(opt.Option, opt.Value);
-            values.push(opt.Value || opt.Option);
+          .then(async (response) => {
+            const json = await response.json();
+            const values = [];
+            json.data.forEach((opt) => {
+              addOption(opt.Option, opt.Value);
+              values.push(opt.Value || opt.Option);
+            });
           });
-        });
     }
   } else {
     options.forEach((value, index) => addOption(optionNames?.[index], value));
@@ -149,6 +149,23 @@ function createLegend(fd) {
   return createLabel(fd, 'legend');
 }
 
+function createRepetablePanel(wrapper, fd) {
+  setConstraints(wrapper, fd);
+  wrapper.dataset.repeatable = true;
+  wrapper.dataset.index = fd.index || 0;
+  if (fd.properties) {
+    Object.keys(fd.properties).forEach((key) => {
+      if (!key.startsWith('fd:')) {
+        wrapper.dataset[key] = fd.properties[key];
+      }
+    });
+  }
+  if (!fd.index || fd?.index === 0) {
+    insertAddButton(wrapper, wrapper);
+    insertRemoveButton(wrapper, wrapper);
+  }
+}
+
 function createFieldSet(fd) {
   const wrapper = createFieldWrapper(fd, 'fieldset', createLegend);
   wrapper.id = fd.id;
@@ -157,9 +174,7 @@ function createFieldSet(fd) {
     wrapper.classList.add('panel-wrapper');
   }
   if (fd.repeatable === true) {
-    setConstraints(wrapper, fd);
-    wrapper.dataset.repeatable = true;
-    wrapper.dataset.index = fd.index || 0;
+    createRepetablePanel(wrapper, fd);
   }
   return wrapper;
 }
@@ -184,13 +199,6 @@ function createRadioOrCheckboxGroup(fd) {
       enum: [value],
       required: fd.required,
     });
-    const layout = fd.properties['afs:layout'];
-    if (layout?.orientation === 'horizontal') {
-      wrapper.classList.add('horizontal');
-    }
-    if (layout?.orientation === 'vertical') {
-      wrapper.classList.remove('horizontal');
-    }
     field.classList.remove('field-wrapper', `field-${toClassName(fd.name)}`);
     const input = field.querySelector('input');
     input.id = id;
@@ -550,12 +558,12 @@ export default async function decorate(block) {
       rules = false;
     } else {
       afModule = await import('./rules/index.js');
-      const bUseWorker = false;
+      const useServiceWorker = false;
       if (afModule && afModule.initAdaptiveForm && !block.classList.contains('edit-mode')) {
         form = await afModule.initAdaptiveForm(formDef, async (model, data) => {
-          formDef = bUseWorker ? model : model.getState();
+          formDef = useServiceWorker ? model : model.getState();
           return createForm(formDef, data);
-        }, bUseWorker);
+        }, useServiceWorker);
       } else {
         form = await createFormForAuthoring(formDef);
       }
@@ -571,4 +579,18 @@ export default async function decorate(block) {
     }
     container.replaceWith(form);
   }
+}
+
+export async function exportForm(formUrl, element) {
+  const url = new URL(formUrl).origin;
+  const a = document.createElement('a');
+  [a.href] = formUrl.split('/jcr:content');
+  a.style.all = 'unset';
+  a.innerHTML = 'Loading Form...';
+  element.appendChild(a);
+  const style = document.createElement('link');
+  style.rel = 'stylesheet';
+  style.href = `${url}/blocks/form/form.css`;
+  document.head.appendChild(style);
+  await decorate(element);
 }
