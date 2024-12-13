@@ -1,4 +1,232 @@
+/*
+ * Copyright 2020 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+@font-face {
+    font-family: roboto;
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../../fonts/roboto-bold.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: roboto;
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../../fonts/roboto-regular.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: roboto-fallback;
+    size-adjust: 100.06%;
+    ascent-override: 95%;
+    src: local('Arial');
+}
+
+@media (width >= 900px) {
+    :root {
+        --heading-font-size-xxl: 60px;
+        --heading-font-size-xl: 48px;
+        --heading-font-size-l: 36px;
+        --heading-font-size-m: 30px;
+        --heading-font-size-s: 24px;
+        --heading-font-size-xs: 22px;
+    }
+}
+
+body {
+    font-size: var(--body-font-size-m);
+    margin: 0;
+    font-family: var(--body-font-family);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+body.appear {
+    display: block;
+}
+
+header {
+    height: var(--nav-height);
+}
+
+h1, h2, h3,
+h4, h5, h6 {
+    font-family: var(--heading-font-family);
+    font-weight: 600;
+    line-height: 1.25;
+    margin-top: 1em;
+    margin-bottom: .5em;
+    scroll-margin: calc(var(--nav-height) + 1em);
+}
+
+h1 { font-size: var(--heading-font-size-xxl) }
+h2 { font-size: var(--heading-font-size-xl) }
+h3 { font-size: var(--heading-font-size-l) }
+h4 { font-size: var(--heading-font-size-m) }
+h5 { font-size: var(--heading-font-size-s) }
+h6 { font-size: var(--heading-font-size-xs) }
+
+p, dl, ol, ul, pre, blockquote {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+code, pre {
+    font-family: var(--fixed-font-family);
+    font-size: var(--body-font-size-s);
+}
+
+code {
+    padding: .125em;
+}
+
+pre {
+    overflow: scroll;
+}
+
+pre {
+    background-color: var(--light-color);
+    padding: 1em;
+    border-radius: .25em;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+/* links */
+a:any-link {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--link-hover-color);
+}
+
+/* buttons */
+a.button:any-link, button {
+    font-family: var(--body-font-family);
+    display: inline-block;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: 2px solid transparent;
+    padding: 5px 30px;
+    text-align: center;
+    font-style: normal;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--background-color);
+    background-color: var(--link-color);
+    margin: 16px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 30px;
+}
+
+a.button:hover, a.button:focus, button:hover, button:focus  {
+    background-color: var(--link-hover-color);
+    cursor: pointer;
+}
+
+button:disabled, button:disabled:hover {
+    background-color: var(--light-color);
+    cursor: unset;
+}
+
+a.button.secondary, button.secondary {
+    background-color: unset;
+    border: 2px solid currentcolor;
+    color: var(--text-color)
+}
+
+img {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+}
+
+.icon {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+}
+
+.icon img {
+    height: 100%;
+    width: 100%;
+}
+
+/* sections */
+.section {
+    padding: 64px 16px;
+}
+
+@media (width >= 600px) {
+    .section {
+        padding: 64px 32px;
+    }
+}
+
+@media (width >= 900px) {
+    .section > div {
+        max-width: 1200px;
+        margin: auto;
+    }
+}
+
+/* section metadata */
+.section.light,
+.section.highlight {
+    background-color: var(--light-color);
+}
+
+
+
 :root {
+    /* colors */
+    --link-color: #035fe6;
+    --link-hover-color: #136ff6;
+    --background-color: white;
+    --light-color: #eee;
+    --dark-color: #ccc;
+    --text-color: black;
+
+    /* fonts */
+    --body-font-family: roboto, roboto-fallback;
+    --heading-font-family: var(--body-font-family);
+    --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
+
+    /* body sizes */
+    --body-font-size-m: 22px;
+    --body-font-size-s: 18px;
+    --body-font-size-xs: 16px;
+
+    /* heading sizes */
+    --heading-font-size-xxl: 48px;
+    --heading-font-size-xl: 40px;
+    --heading-font-size-l: 32px;
+    --heading-font-size-m: 24px;
+    --heading-font-size-s: 20px;
+    --heading-font-size-xs: 18px;
+
+    /* nav height */
+    --nav-height: 64px;
+
+    /*Form styles: */
     --background-color-primary: #fff;
     --label-color: #666;
     --border-color: #818a91;
@@ -56,14 +284,13 @@
     --form-wizard-padding-bottom: 160px;
     --form-wizard-step-legend-padding: 10px;
     --form-wizard-step-legend-font-size: 1.1rem;
-    --form-field-gap: 5px;
 }
 
 * {
     box-sizing: border-box;
 }
 
-main .form pre {
+.form pre {
     display: none;
 }
 
@@ -77,50 +304,50 @@ form:not(.edit-mode) [data-visible="false"] {
     display: none !important;
 }
 
-main .form-container {
+.form-container {
     background-color: var(--form-background-color);
     padding: var(--form-padding);
     width: var(--form-width);
     margin: var(--nav-height) auto;
 }
 
-main .form {
+.form {
     background-color: var(--form-background-color);
 }
 
-main .form > div:not(:first-child) {
+.form > div:not(:first-child) {
     display: none;
 }
 
-main .form form {
+.form form {
     display: grid;
     grid-template-columns: repeat(var(--form-columns), minmax(0, 1fr));
     gap: var(--form-field-vert-gap) var(--form-field-horz-gap);
 }
 
-main .form form fieldset {
+.form form fieldset {
     border: var(--form-fieldset-border);
     margin: var(--form-fieldset-marign);
     width: 100%;
 }
 
-main .form form fieldset fieldset {
+.form form fieldset fieldset {
     padding: 0;
 }
 
-main .form .field-description {
+.form .field-description {
     color: var(--form-label-color);
     font-size: var(--form-font-size-xs);
 }
 
-main .form form .field-invalid .field-description {
+.form form .field-invalid .field-description {
     color: var(--form-error-color);
     font-weight: 700;
 }
 
-main .form input,
-main .form textarea,
-main .form select {
+.form input,
+.form textarea,
+.form select {
     background-color: var(--form-input-background-color);
     border: var(--form-input-border-size) solid var(--form-input-border-color);
     width: 100%;
@@ -134,20 +361,20 @@ main .form select {
     border-radius: 0.25rem;
 }
 
-main .form select {
-  padding-top: 0;
-  padding-bottom: 0;
+.form select {
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
-main .form input[type='file'] {
+.form input[type='file'] {
     border: none;
     padding-inline-start:0;
     background: unset;
     color: unset;
 }
 
-main .form input[type='checkbox'],
-main .form input[type='radio'] {
+.form input[type='checkbox'],
+.form input[type='radio'] {
     width: 16px;
     height: 16px;
     flex: none;
@@ -156,15 +383,15 @@ main .form input[type='radio'] {
     z-index: 1;
 }
 
-main .form textarea {
+.form textarea {
     min-height: 100px;
 }
 
-main .form input:hover, main .form select:hover {
+.form input:hover, .form select:hover {
     border-color: rgb(90 92 96);
 }
 
-main .form fieldset legend {
+.form fieldset legend {
     font-weight: var(--form-fieldset-legend-font-weight);
     font-size: var(--form-fieldset-legend-font-size);
     color: var(--form-fieldset-legend-color);
@@ -174,48 +401,48 @@ main .form fieldset legend {
     margin-bottom: 10px;
 }
 
-main .form label {
+.form label {
     font-weight: var(--form-label-font-weight);
     font-size: var(--form-label-font-size);
     color: var(--form-label-color);
 }
 
-main .form label.required::after {
+.form label.required::after {
     content: "*";
     color: var(--form-label-color);
     padding-inline-start: 5px;
 }
 
-main .form form p,
-main .form form .repeat-wrapper,
-main .form form .field-wrapper {
+.form form p,
+.form form .repeat-wrapper,
+.form form .field-wrapper {
     margin: var(--form-field-gap);
     color: var(--form-label-color);
     grid-column: span 12;
 }
 
-main .form form p {
+.form form p {
     font-size: var(--form-paragraph-font-size);
     font-style: var(--form-paragraph-font-style);
     color: var(--form-paragraph-color);
     margin: var(--form-paragraph-margin);
 }
 
-main .form form .checkbox-wrapper, main .form form .radio-wrapper {
+.form form .checkbox-wrapper, .form form .radio-wrapper {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     margin: 0;
     gap: 8px;
 }
 
-main .form form fieldset > .radio-wrapper,
-main .form form fieldset > .checkbox-wrapper {
-    margin-left: var(--form-field-gap);
+.form form fieldset > .radio-wrapper:first-of-type,
+.form form fieldset > .checkbox-wrapper:first-of-type {
+    margin: var(--form-field-gap);
 }
 
-main .form .radio-wrapper  label,
-main .form .checkbox-wrapper label {
-    flex-basis: calc(100% - 24px);
+.form .radio-wrapper  label,
+.form .checkbox-wrapper label {
+    flex-basis: calc(100% - 28px);
 }
 
 input::file-selector-button {
@@ -225,7 +452,7 @@ input::file-selector-button {
     text-align: center;
 }
 
-main .form button {
+.form button {
     color: var(--form-button-color);
     background: var(--form-button-background-color);
     border: var(--form-button-border);
@@ -235,30 +462,30 @@ main .form button {
     width: 100%;
 }
 
-main form .file-wrapper > button{
+form .file-wrapper > button{
     display: flex;
 }
 
-main .form button:hover {
+.form button:hover {
     background: var(--form-button-background-hover-color);
 }
 
-main .submit-wrapper{
+.submit-wrapper{
     width: var(--form-submit-width);
 }
 
-main .form input:disabled,
-main .form textarea:disabled,
-main .form select:disabled,
-main .form button:disabled {
+.form input:disabled,
+.form textarea:disabled,
+.form select:disabled,
+.form button:disabled {
     background-color: var(--form-input-disable-color);
 }
 
-main .file-wrapper.decorated input[type="file"] {
+.file-wrapper.decorated input[type="file"] {
     display: none;
 }
 
-main .file-wrapper .field-dropregion {
+.file-wrapper .field-dropregion {
     background: rgb(0 0 0 / 2%);
     border: 1px dashed var(--form-input-border-color);
     border-radius: 4px;
@@ -267,39 +494,44 @@ main .file-wrapper .field-dropregion {
     text-align: center;
 }
 
-main .form form .item-remove {
-    padding: 0;
-    background: #fff;
-    padding-left: 10px;
+/* Repeatable Styling */
+.form form .repeat-actions {
+    grid-column: span 12;
 }
 
-main .form form .item-add {
+.form form .item-remove,
+.form form .item-add {
     overflow: unset;
-    display: flex;
-    justify-content: center;
+    display: none;
 }
 
-main .form .file-description{
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  margin-top: 5px;
+.form form .item-remove {
+    justify-self: end;
+    grid-column: span 12;
 }
 
-main .form .file-description .file-description-name {
-  cursor: pointer;
-  text-decoration: underline;
-  flex: 1;
-}
-
-main .form form .item-remove span {
+.form form div[data-variant="addRemoveAll"] .item-add,
+.form form div[data-variant="addRemoveLast"] .item-add,
+.form form div[data-variant="addRemoveAll"] .item-remove,
+.form form div[data-variant="addRemoveLast"] fieldset:last-of-type .item-remove {
     display: block;
-    width: 20px;
-    height: 20px;
-    background: url('../../icons/delete.svg') no-repeat;
 }
 
-main .file-wrapper .file-description button {
+/* End of Repeatable Styling */
+.form .file-description{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.form .file-description .file-description-name {
+    cursor: pointer;
+    text-decoration: underline;
+    flex: 1;
+}
+
+.file-wrapper .file-description button {
     --form-button-padding: 15px;
 
     width: 12px;
@@ -312,7 +544,7 @@ main .file-wrapper .file-description button {
     border-radius: 3px;
 }
 
-main .file-wrapper .file-description button::after{
+.file-wrapper .file-description button::after{
     content: 'X';
     position: absolute;
     top: 50%;
@@ -321,55 +553,55 @@ main .file-wrapper .file-description button::after{
     transform: translate(-50%, -50%);
 }
 
-main .form .button-wrapper button {
+.form .button-wrapper button {
     cursor:pointer
 }
 
-main .form .button-wrapper button:hover {
+.form .button-wrapper button:hover {
     border: 3px solid var(#fff);
     color: #fff;
     background-color: var(--button-secondary-color);
 }
 
-main .form .button-wrapper button[disabled] {
+.form .button-wrapper button[disabled] {
     cursor:auto
 }
 
-main .form .button-wrapper button[disabled]:hover {
+.form .button-wrapper button[disabled]:hover {
     border: 3px solid var(--button-secondary-color);
     color: var(--button-secondary-color);
     background-color: transparent;
 }
 
 /** Wizard Styling */
-main .form form .wizard  {
-  display: grid;
-  counter-reset: wizard-step-counter;
-  grid-template-columns: minmax(0, 1fr);
-  border: var(--form-wizard-border) solid var(--form-wizard-border-color);
-  background-color: var( --form-wizard-background-color);
-  gap: unset;
-  padding: 20px var(--form-wizard-padding);
+.form form .wizard  {
+    display: grid;
+    counter-reset: wizard-step-counter;
+    grid-template-columns: minmax(0, 1fr);
+    border: var(--form-wizard-border) solid var(--form-wizard-border-color);
+    background-color: var( --form-wizard-background-color);
+    gap: unset;
+    padding: 20px var(--form-wizard-padding);
 }
 
-main .form form .wizard > legend{
+.form form .wizard > legend{
     float: left;
     width: 100%;
 }
 
-main .form form .wizard > .field-description{
-  width: 100%;
+.form form .wizard > .field-description{
+    width: 100%;
 }
 
-main .form form .wizard > fieldset > legend{
+.form form .wizard > fieldset > legend{
     display: none;
 }
 
-main .form form .wizard > fieldset:not(.current-wizard-step){
+.form form .wizard > fieldset:not(.current-wizard-step){
     display: none;
 }
 
-main .form form .wizard .wizard-button-wrapper{
+.form form .wizard .wizard-button-wrapper{
     display: flex;
     justify-content: end;
     gap: 50px;
@@ -378,7 +610,7 @@ main .form form .wizard .wizard-button-wrapper{
     grid-column: span 12;
 }
 
-main .form form .wizard .wizard-button-wrapper .field-wrapper{
+.form form .wizard .wizard-button-wrapper .field-wrapper{
     flex: unset;
 }
 
@@ -396,82 +628,83 @@ main .form form .wizard .wizard-button-wrapper .field-wrapper{
     grid-column: span 12;
 }
 
-main .form form .wizard .wizard-menu-item {
-  counter-increment: wizard-step-counter;
+.form form .wizard .wizard-menu-item {
+    counter-increment: wizard-step-counter;
 }
 
-main .form form .wizard .wizard-menu-item::before {
-  content: counter(wizard-step-counter);
-  border: 2px solid var(--form-wizard-number-color);
-  color: var(--form-wizard-number-color);
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  margin-right: 10px;
-  text-align: center;
-  line-height: 2;
-  display: inline-block;
+.form form .wizard .wizard-menu-item::before {
+    content: counter(wizard-step-counter);
+    border: 2px solid var(--form-wizard-number-color);
+    color: var(--form-wizard-number-color);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+    text-align: center;
+    line-height: 2;
+    display: inline-block;
 }
 
-main .form form .wizard .wizard-menu-active-item::before{
-  border: 2px solid var(--form-wizard-number-color);
-  background: var(--form-wizard-number-color);
-  color: var(--background-color-primary);
-  font-weight: 600;
+.form form .wizard .wizard-menu-active-item::before{
+    border: 2px solid var(--form-wizard-number-color);
+    background: var(--form-wizard-number-color);
+    color: var(--background-color-primary);
+    font-weight: 600;
 }
 
 @media (width >= 600px) {
-    main .form button {
+    .form button {
         width: unset;
     }
 }
 
 /* wizard title on left */
-main .form form .wizard.left{
-  display: flex;
+.form form .wizard.left{
+    display: flex;
 }
 
-main .form form .wizard.left .wizard-menu-items{
-  flex-direction: column;
-  width: 300px;
+.form form .wizard.left .wizard-menu-items{
+    flex-direction: column;
+    width: 300px;
 }
 
-main form .panel-wrapper {
-  display: flex;
-  padding: 0;
-  flex-direction: column;
+form .panel-wrapper {
+    display: flex;
+    padding: 0;
+    flex-direction: column;
 }
 
-main .form form .panel-wrapper{
-  display: grid;
-  grid-template-columns: repeat(var(--form-columns), minmax(0, 1fr));
-  gap: var(--form-field-vert-gap) var(--form-field-horz-gap);
-}
-
-main .form form .repeat-wrapper{
+.form form .panel-wrapper{
     display: grid;
     grid-template-columns: repeat(var(--form-columns), minmax(0, 1fr));
     gap: var(--form-field-vert-gap) var(--form-field-horz-gap);
 }
 
-main .form form .wizard.left .panel-wrapper{
-  flex: 1;
+.form form .repeat-wrapper{
+    display: grid;
+    grid-template-columns: repeat(var(--form-columns), minmax(0, 1fr));
+    gap: var(--form-field-vert-gap) var(--form-field-horz-gap);
+}
+
+.form form .wizard.left .panel-wrapper{
+    flex: 1;
 }
 
 @media (width >= 1200px) {
-    main .form form .form-textarea-wrapper,
-    main .form form .file-wrapper,
-    main .form form .panel-wrapper {
+    .form form .checkbox-wrapper,
+    .form form .form-textarea-wrapper,
+    .form form .file-wrapper,
+    .form form .panel-wrapper {
         flex: 1 0 100%;
     }
 
-    main .form form .panel-wrapper {
+    .form form .panel-wrapper {
         flex-flow: row wrap;
         gap: 10px 15px;
     }
 }
 
-main .form .form-message.success-message {
+.form .form-message.success-message {
     color: #0f5132;
     background-color: #d1e7dd;
     border-color: #badbcc;
@@ -480,7 +713,7 @@ main .form .form-message.success-message {
     padding: 10px;
 }
 
-main .form .form-message.error-message {
+.form .form-message.error-message {
     color: #842029;
     background-color: #f8d7da;
     border-color: #f5c2c7;
@@ -489,86 +722,80 @@ main .form .form-message.error-message {
     padding: 10px;
 }
 
-main .form .file-wrapper .file-drag-area {
-  border: 1px dashed var(--border-color);
-  border-radius: 5px;
-  padding: 10px 5px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
+.form .file-wrapper .file-drag-area {
+    border: 1px dashed var(--border-color);
+    border-radius: 5px;
+    padding: 10px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 /* grid css */
-main .form form .field-wrapper .field-description{
-  grid-column: span 12;
-}
-
-main .form form .field-wrapper.col-12 {
+.form form .field-wrapper .field-description{
     grid-column: span 12;
 }
 
-main .form form .field-wrapper.col-11 {
+.form form .field-wrapper.col-12 {
+    grid-column: span 12;
+}
+
+.form form .field-wrapper.col-11 {
     grid-column: span 11;
 }
 
-main .form form .field-wrapper.col-10 {
-  grid-column: span 10;
+.form form .field-wrapper.col-10 {
+    grid-column: span 10;
 }
 
-main .form form .field-wrapper.col-9 {
+.form form .field-wrapper.col-9 {
     grid-column: span 9;
 }
 
-main .form form .field-wrapper.col-8 {
+.form form .field-wrapper.col-8 {
     grid-column: span 8;
 }
 
-main .form form .field-wrapper.col-7 {
+.form form .field-wrapper.col-7 {
     grid-column: span 7;
 }
 
-main .form form .field-wrapper.col-6 {
-      grid-column: span 6;
+.form form .field-wrapper.col-6 {
+    grid-column: span 6;
 }
 
-main .form form .field-wrapper.col-5 {
-      grid-column: span 5;
+.form form .field-wrapper.col-5 {
+    grid-column: span 5;
 }
 
-main .form form .field-wrapper.col-4 {
-      grid-column: span 4;
+.form form .field-wrapper.col-4 {
+    grid-column: span 4;
 }
 
-main .form form .field-wrapper.col-3 {
-      grid-column: span 3;
+.form form .field-wrapper.col-3 {
+    grid-column: span 3;
 }
 
-main .form form .field-wrapper.col-2 {
-      grid-column: span 2;
+.form form .field-wrapper.col-2 {
+    grid-column: span 2;
 }
 
-main .form form .field-wrapper.col-1 {
+.form form .field-wrapper.col-1 {
     grid-column: span 1;
 }
 
-main .form .form-image-wrapper  img {
-  max-width: 100%;
-  height: auto;
+.form .form-image-wrapper  img {
+    max-width: 100%;
+    height: auto;
 }
 
-main form .wizard > .current-wizard-step.panel-wrapper:first-of-type ~ .wizard-button-wrapper > .wizard-button-prev,
-main form .wizard > .current-wizard-step.panel-wrapper:last-of-type ~ .wizard-button-wrapper > .wizard-button-next {
+form .wizard > .current-wizard-step.panel-wrapper:first-of-type ~ .wizard-button-wrapper > .wizard-button-prev,
+form .wizard > .current-wizard-step.panel-wrapper:last-of-type ~ .wizard-button-wrapper > .wizard-button-next {
     display: none;
 }
 
-main .form form:not(.edit-mode) .captcha-wrapper{
+.form form:not(.edit-mode) .captcha-wrapper{
     display: none ;
-}
-
-main .form form .horizontal {
-    display: flex;
-    flex-direction: row;
-    gap: inherit;
 }
